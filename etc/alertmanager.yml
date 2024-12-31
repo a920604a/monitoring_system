@@ -1,0 +1,19 @@
+global:
+  smtp_smarthost: "smtp.gmail.com:587"
+  smtp_from: "timchen@oomii.com"
+  smtp_auth_username: "timchen@oomii.com"
+  smtp_auth_password: "xlifzemxxgclundb"
+  smtp_require_tls: true
+
+route:
+  group_by: ['alertname']
+  group_wait: 15s  # 在一組告警生成後，Alertmanager 會等待 15 秒，以便收集更多屬於同一群組的告警，然後一起發送。
+  group_interval: 30s  # 同一告警群組中，如果有新的告警觸發，則在前一次通知後的 30 秒內重新發送更新的群組通知。
+  repeat_interval: 3h  # 每隔 3 小時也會重新發送告警通知，提醒接收端該告警仍處於觸發狀態。
+  receiver: live-monitoring
+
+receivers:
+  - name: 'live-monitoring'
+    email_configs:
+      - to: 'timchen@oomii.com'  # 收件人
+        send_resolved: true # 啟用後，當告警狀態從觸發變為解決時，會向收件人發送「解決通知」。

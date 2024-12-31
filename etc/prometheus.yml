@@ -1,0 +1,94 @@
+# global config
+global:
+
+  # 拉取目標的默認時間間隔
+  # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  scrape_interval:     3s 
+
+  # 執行規則的時間間隔
+  # Evaluate rules every 3 seconds. The default is every 1 minute.
+  evaluation_interval: 3s 
+
+  # scrape_timeout is set to the global default (10s)拉取一個目標原子的時間.
+  # external_labels：額外的屬性，會添加到拉取的數據並存到數據庫中
+
+# Alertmanager configuration 
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets: ['alertmanager:9093']
+
+# 根據alert.yml 的規則，並依造evaluation_interval的時間做拉取
+rule_files:
+  - "alert.yml"
+
+# 抓取資料的目標
+scrape_configs:
+  - job_name: 'prometheus'
+    # 覆蓋global 時間，這邊可以自行指定該服務要多久抓一次
+    scrape_interval: 3s
+    static_configs:
+      - targets: ['prometheus:9090']
+    basic_auth:
+      username: "tim"
+      password: "littleTim"
+
+  # - job_name: 'local-machine'
+  #   scrape_interval: 3s
+  #   static_configs:
+  #     - targets: ['node_exporter:9100']
+  #   basic_auth:
+  #     username: ""
+  #     password: ""
+
+  # - job_name: 'rm2-machine'
+  #   scrape_interval: 3s
+  #   static_configs:
+  #     - targets: [ '192.168.15.124:9101']
+  #   basic_auth:
+  #     username: ""
+  #     password: ""
+
+  
+  # 監控 Node Exporter
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['node-exporter:9100', '192.168.15.95:9100']
+    
+    basic_auth:
+      username: "tim"
+      password: "littleTim"
+
+  # 監控 cAdvisor
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080', '192.168.15.95:8080']
+      
+    basic_auth:
+      username: "tim"
+      password: "littleTim"
+
+  # - job_name: 'gitlab'
+  #   static_configs:
+  #     - targets: ['192.168.15.123:8000']
+  #   metrics_path: '/-/metrics'
+
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+        - "https://www.google.com/"
+        - "http://gitlab.horuseyetech.com/"
+      
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - source_labels: [__param_target]
+        target_label: target
+      - target_label: __address__
+        replacement: blackbox:9115
+
