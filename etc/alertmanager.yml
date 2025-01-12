@@ -1,8 +1,8 @@
 global:
   smtp_smarthost: "smtp.gmail.com:587"
-  smtp_from: "timchen@oomii.com"
-  smtp_auth_username: "timchen@oomii.com"
-  smtp_auth_password: "xlifzemxxgclundb"
+  smtp_from: "tim@compnay.com"
+  smtp_auth_username: "tim@compnay.com"
+  smtp_auth_password: "xxx555xxx666"
   smtp_require_tls: true
 
 route:
@@ -15,5 +15,5 @@ route:
 receivers:
   - name: 'live-monitoring'
     email_configs:
-      - to: 'timchen@oomii.com'  # 收件人
+      - to: 'tim@compnay.com'  # 收件人
         send_resolved: true # 啟用後，當告警狀態從觸發變為解決時，會向收件人發送「解決通知」。
