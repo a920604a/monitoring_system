@@ -1,8 +1,4 @@
-在您提供的專案設定中，這是一個完整的監控系統，整合了 Prometheus、Grafana、Alertmanager、Blackbox、Nginx、Node Exporter、cAdvisor 以及自定義警報和資料收集。以下是專案的 `README.md` 更新，並包含了資料流和架構圖的概述：
-
----
-
-# 觀察性堆疊專案
+# 專案
 
 此專案設定了一個高效能的監控系統，主要由以下組件組成：
 - **Prometheus**: 收集並存儲來自各種來源的指標數據。
@@ -54,6 +50,3 @@
 2. **Alertmanager 配置**：設置了警報接收者（如電子郵件），並指定了告警的發送間隔和重複發送的時間。
 3. **Nginx 配置**：設置反向代理，將請求分發給 Grafana、Prometheus、Alertmanager 和 Blackbox 等服務。
 
----
-
-這樣的設定確保了您的系統能夠高效地進行監控、警報和資料可視化，同時也有助於及時發現並處理系統中出現的異常情況。
