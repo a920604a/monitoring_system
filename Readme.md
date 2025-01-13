@@ -53,7 +53,26 @@
    
 ## 架構圖
 
-![](arch.png)
+```mermaid
+graph TB
+    A[Node Exporter] -->|Provides system metrics| B[Prometheus]
+    C[cAdvisor] -->|Provides container metrics| B[Prometheus]
+    D[Blackbox Exporter] -->|Provides external service health| B[Prometheus]
+    B[Prometheus] -->|Provides data| E[Grafana]
+    B[Prometheus] -->|Sends alerts| F[Alertmanager]
+    F[Alertmanager] -->|Sends notifications| G[Email/Slack]
+    H[Nginx] -->|Reverse proxy| E[Grafana]
+    
+    style A fill:#a2dff7
+    style C fill:#a2dff7
+    style D fill:#a2dff7
+    style B fill:#f7c78c
+    style E fill:#f7c78c
+    style F fill:#f7c78c
+    style G fill:#f7c78c
+    style H fill:#f7c78c
+
+```
 
 ## 配置
 
