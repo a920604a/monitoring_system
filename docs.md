@@ -5,7 +5,7 @@
 4. Tempo：收集 Grafana 送出的 Trace 資訊
 5. Nginx：單純作為被監測的 Container/ Grafana 服務的入口，擔任 Load Balancer 將 Request 分散到 Grafana Instance 上
 6. Grafana：視覺化與告警的核心組件
-Grafana Renderer：搭配 Alerting 截取 Panel 圖片
+Grafana Renderer：搭配 Alerting 截取 Panel 圖片。
 
 7. Postgres：Grafana Instance 共用的資料庫
 8. Redis：Grafana Instance 用來同步告警狀態的資料庫
